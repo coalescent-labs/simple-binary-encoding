@@ -26,6 +26,8 @@ import uk.co.real_logic.sbe.generation.java.JavaGenerator;
 import uk.co.real_logic.sbe.generation.java.JavaOutputManager;
 import uk.co.real_logic.sbe.generation.rust.RustGenerator;
 import uk.co.real_logic.sbe.generation.rust.RustOutputManager;
+import uk.co.real_logic.sbe.generation.ts.TypeScriptGenerator;
+import uk.co.real_logic.sbe.generation.ts.TypeScriptOutputManager;
 import uk.co.real_logic.sbe.ir.Ir;
 
 import static uk.co.real_logic.sbe.SbeTool.*;
@@ -102,6 +104,20 @@ public enum TargetCodeGeneratorLoader implements TargetCodeGenerator
         public CodeGenerator newInstance(final Ir ir, final String outputDir)
         {
             return new GolangGenerator(ir, new GolangOutputManager(outputDir, ir.applicableNamespace()));
+        }
+    },
+
+    /**
+     * Generates codecs for the TypeScript programming language.
+     */
+    TYPESCRIPT()
+    {
+        /**
+         * {@inheritDoc}
+         */
+        public CodeGenerator newInstance(final Ir ir, final String outputDir)
+        {
+            return new TypeScriptGenerator(ir, new TypeScriptOutputManager(outputDir, ir.applicableNamespace()));
         }
     },
 

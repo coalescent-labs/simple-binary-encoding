@@ -115,6 +115,15 @@ csharp/csharp.sln.DotSettings.user
 rust/target
 rust/Cargo.lock
 
+#typescript
+ts/node_modules/
+ts/dist/
+ts/package-lock.json
+ts/codecs
+ts/generated
+ts/car_example_extension_data.sbe
+ts/car_example_baseline_data.sbe
+
 # Mac
 .DS_Store
 /sbe-tool/src/main/golang/uk_co_real_logic_sbe_ir_generated/
