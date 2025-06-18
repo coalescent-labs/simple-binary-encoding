@@ -827,6 +827,46 @@ tasks.register('generateCSharpCodecs') {
             'generateCSharpCodecsWithXIncludes'
 }
 
+/*
+ * Python codec targets used for testing, benchmarking etc.
+ */
+tasks.register('generatePythonExamples', JavaExec) {
+    mainClass.set('uk.co.real_logic.sbe.SbeTool')
+    classpath = project(':sbe-all').sourceSets.main.runtimeClasspath
+    jvmArgs('--add-opens', 'java.base/jdk.internal.misc=ALL-UNNAMED')
+    systemProperties(
+            'sbe.output.dir': 'python/sbe-generated',
+            'sbe.xinclude.aware': 'true',
+            'sbe.target.language': 'Python',
+            'sbe.target.namespace': 'examples')
+    args = ['sbe-samples/src/main/resources/example-schema.xml',
+            'sbe-samples/src/main/resources/example-extension-schema.xml',
+            'sbe-benchmarks/src/main/resources/car.xml',
+            'sbe-benchmarks/src/main/resources/fix-message-samples.xml'
+    ]
+}
+
+tasks.register('generatePythonTestCodecs', JavaExec) {
+    mainClass.set('uk.co.real_logic.sbe.SbeTool')
+    classpath = project(':sbe-all').sourceSets.main.runtimeClasspath
+    jvmArgs('--add-opens', 'java.base/jdk.internal.misc=ALL-UNNAMED')
+    systemProperties(
+            'sbe.output.dir': 'python/sbe-generated',
+            'sbe.xinclude.aware': 'true',
+            'sbe.target.language': 'Python',
+            'sbe.validation.xsd': validationXsdPath)
+    args = ['sbe-tool/src/test/resources/code-generation-schema.xml',
+            'sbe-tool/src/test/resources/example-schema.xml',
+            'sbe-tool/src/test/resources/example-bigendian-test-schema.xml',
+            'sbe-tool/src/test/resources/nested-composite-name.xml'
+    ]
+}
+
+tasks.register('generatePythonCodecs') {
+    description = 'Generate Python test codecs'
+    dependsOn 'generatePythonExamples', 'generatePythonTestCodecs'
+}
+
 tasks.register('generateJavaIrCodecs', JavaExec) {
     dependsOn 'computeOriginalIrHash'
     mainClass.set('uk.co.real_logic.sbe.SbeTool')

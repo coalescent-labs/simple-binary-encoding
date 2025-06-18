@@ -111,6 +111,9 @@ csharp/sbe-tests/*.sbe
 csharp/nuget/
 csharp/csharp.sln.DotSettings.user
 
+#python
+python/sbe-generated
+
 # rust
 rust/target
 rust/Cargo.lock
